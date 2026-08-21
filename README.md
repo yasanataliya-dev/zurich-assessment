@@ -2,24 +2,26 @@
 
 A secure user management application built as part of the Zurich Web Developer Assignment.
 
-The application is built using Next.js, React, TypeScript, Redux Toolkit, Better Auth, Google OAuth2, Jest, and React Testing Library.
+The application is built using Next.js, React, TypeScript, Redux Toolkit, Better Auth, Google OAuth2, Jest, React Testing Library, and Tailwind CSS.
 
 ## Features
 
 - Google OAuth2 authentication
 - Protected user routes
+- Server-side rendering with Next.js
+- Server Actions for on-demand requests
 - Redux Toolkit for state management
 - Secure server-side API communication
 - ReqRes API integration
-- User filtering
 - Email masking
 - Show/Hide email functionality
 - User details page
 - Reusable Header and Footer components
 - Logout functionality
-- Unit tests using Jest and React Testing Library
+- Loading and error states
 - TypeScript
 - ESLint
+- Unit tests using Jest and React Testing Library
 
 ## Technology Stack
 
@@ -30,10 +32,11 @@ The application is built using Next.js, React, TypeScript, Redux Toolkit, Better
 - React Redux
 - Better Auth
 - Google OAuth2
+- Tailwind CSS
 - Jest
 - React Testing Library
 - ReqRes API
-- CSS
+- ESLint
 
 ## Application Flow
 
@@ -53,38 +56,26 @@ After successful authentication, the user is redirected to: /users
 
 ### 2. Users List
 
-The users page retrieves user data through the application's server-side API layer.
+The users page is implemented as a Next.js Server Component.
 
-The application:
+User data is retrieved through server-side API functions, keeping the ReqRes API key away from the browser.
 
-Retrieves all available pages from the ReqRes API.
-Combines the user records.
-Filters users according to the assignment requirements.
-Displays the filtered users.
-Masks email addresses by default.
+The application displays the available users and provides:
 
-### 3. User Filtering
+Email masking
+Show/Hide email functionality
+User details navigation
+Refresh functionality
 
-Only users matching either of the following conditions are displayed:
+### 3. Email Privacy
 
-First name starts with G
-OR last name starts with W
+Email addresses are hidden by default.
 
-### 4. Email Privacy
+The user can click Show Email to reveal the email address and Hide Email to hide it again.
 
-Email addresses are masked by default:
+### 4. User Details
 
-****************
-
-The user can click Show Email to reveal the email address.
-
-The email can then be hidden again using Hide Email.
-
-### 5. User Details
-
-Clicking a user opens:
-
-/users/[id]
+Clicking a user opens: /users/[id]
 
 The details page displays:
 
@@ -96,38 +87,57 @@ User ID
 
 A Back to Users link allows the user to return to the users list.
 
+### 5. Server-Side Architecture
+
+The application uses Next.js Server Components for server-side data fetching.
+
+Client Components are used only where browser-side interactivity is required, such as:
+
+Google login
+Logout
+Email visibility
+Refresh interaction
+Authentication state
+
+Server Actions are used for on-demand operations initiated by the client.
+
 ### Security
 
-Security is an important part of the application.
+Security and data privacy are important considerations in the application.
 
-The ReqRes API key is stored in environment variables and accessed from server-side code.
+The ReqRes API key is stored in environment variables.
+Google OAuth credentials are stored in environment variables.
+Sensitive credentials are never exposed through NEXT_PUBLIC_* environment variables.
+Protected routes perform server-side authentication checks.
+API communication containing sensitive credentials is handled on the server.
+.env files are excluded from Git using .gitignore.
 
-Sensitive environment variables are not exposed using the NEXT_PUBLIC_ prefix.
-
-The application uses server-side API routes to keep business logic and sensitive API credentials away from the browser.
-
-### Environment Variables
+Environment Variables
 
 Create a .env.local file in the project root:
 
 REQRES_API_KEY=your_reqres_api_key
+
 GOOGLE_CLIENT_ID=your_google_client_id
 GOOGLE_CLIENT_SECRET=your_google_client_secret
+
 BETTER_AUTH_SECRET=your_better_auth_secret
 BETTER_AUTH_URL=http://localhost:3000
-NEXT_PUBLIC_BETTER_AUTH_URL=http://localhost:3000
+
+### Code Quality
+
+The application follows a component-based architecture with an emphasis on:
+
+Server/client separation
+Reusable components
+Type safety
+Separation of concerns
+Secure API communication
+Maintainable state management
+Error and loading states
+ESLint validation
+Unit testing
 
 ### Conclusion
 
-This project was implemented with a focus on:
-
-Security
-Maintainability
-Reusable components
-Separation of concerns
-Type safety
-State management
-Authentication
-Testability
-Server-side business logic
-
+The application was implemented with a focus on security, maintainability, reusability, type safety, authentication, server-side rendering, and production-ready Next.js practices.
