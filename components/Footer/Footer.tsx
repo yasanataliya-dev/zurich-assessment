@@ -6,18 +6,8 @@ export default function Footer({
   text = "© 2026 Zurich",
 }: FooterProps) {
   return (
-    <footer
-      style={{
-        textAlign: "center",
-        padding: "24px",
-        marginTop: "40px",
-        color: "#666",
-        fontSize: "14px",
-      }}
-    >
+    <footer className="mt-10 p-6 text-center text-sm text-gray-500">
       {text}
     </footer>
   );
 }
-
-<Footer text="© 2026 Zurich Insurance" />

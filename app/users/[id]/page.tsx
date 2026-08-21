@@ -1,3 +1,4 @@
+import { getUserById } from "@/lib/api";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -12,106 +13,41 @@ export default async function UserDetailsPage({
 }: UserPageProps) {
   const { id } = await params;
 
-  const response = await fetch(
-    `${process.env.BETTER_AUTH_URL}/api/users/${id}`,
-    {
-      cache: "no-store",
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch user");
-  }
-
-  const result = await response.json();
-  const user = result.data;
+  const user = await getUserById(id);
 
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        backgroundColor: "#f5f6f8",
-        padding: "30px 50px",
-      }}
-    >
-      <header
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          backgroundColor: "#ffffff",
-          padding: "18px 24px",
-          borderRadius: "10px",
-          marginBottom: "30px",
-          boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
-        }}
-      >
-        <h1
-          style={{
-            margin: 0,
-            fontSize: "28px",
-          }}
-        >
+    <main className="min-h-screen bg-gray-50 px-6 py-8 md:px-12">
+      <header className="mb-8 flex items-center justify-between rounded-xl bg-white px-6 py-5 shadow-sm">
+        <h1 className="text-2xl font-semibold text-gray-900">
           User Details
         </h1>
 
         <Link
           href="/users"
-          style={{
-            textDecoration: "none",
-            color: "#333",
-            fontWeight: 500,
-          }}
+          className="font-medium text-gray-600 transition hover:text-blue-600"
         >
           Back to Users
         </Link>
       </header>
 
-      <div
-        style={{
-          maxWidth: "500px",
-          margin: "50px auto",
-          backgroundColor: "#ffffff",
-          borderRadius: "14px",
-          padding: "40px",
-          textAlign: "center",
-          boxShadow: "0 2px 10px rgba(0,0,0,0.08)",
-        }}
-      >
+      <div className="mx-auto mt-12 max-w-lg rounded-2xl bg-white p-10 text-center shadow-sm">
         <Image
           src={user.avatar}
           alt={`${user.first_name} ${user.last_name}`}
           width={150}
           height={150}
-          style={{
-            borderRadius: "50%",
-            objectFit: "cover",
-          }}
+          className="mx-auto rounded-full object-cover"
         />
 
-        <h2
-          style={{
-            marginTop: "20px",
-            marginBottom: "8px",
-          }}
-        >
+        <h2 className="mt-5 text-2xl font-semibold text-gray-900">
           {user.first_name} {user.last_name}
         </h2>
 
-        <p
-          style={{
-            color: "#666",
-            marginBottom: "10px",
-          }}
-        >
+        <p className="mb-3 mt-2 text-gray-600">
           {user.email}
         </p>
 
-        <p
-          style={{
-            color: "#888",
-          }}
-        >
+        <p className="text-sm text-gray-500">
           User ID: {user.id}
         </p>
       </div>

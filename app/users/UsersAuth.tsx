@@ -19,7 +19,11 @@ export default function UsersAuth({
   }, [session, isPending, router]);
 
   if (isPending) {
-    return <p style={{ padding: "30px" }}>Checking authentication...</p>;
+    return (
+      <p className="p-8 text-center text-sm text-gray-600">
+        Checking authentication...
+      </p>
+    );
   }
 
   if (!session) {

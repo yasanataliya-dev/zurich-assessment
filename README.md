@@ -11,7 +11,6 @@ The application is built using Next.js, React, TypeScript, Redux Toolkit, Better
 - Redux Toolkit for state management
 - Secure server-side API communication
 - ReqRes API integration
-- Pagination
 - User filtering
 - Email masking
 - Show/Hide email functionality
@@ -62,7 +61,6 @@ Retrieves all available pages from the ReqRes API.
 Combines the user records.
 Filters users according to the assignment requirements.
 Displays the filtered users.
-Provides pagination.
 Masks email addresses by default.
 
 ### 3. User Filtering

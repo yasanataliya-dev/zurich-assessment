@@ -1,76 +1,39 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import type { RootState, AppDispatch } from "@/store/store";
-import { setUsers } from "@/store/userSlice";
 
-type User = {
-  id: number;
-  email: string;
-  first_name: string;
-  last_name: string;
-  avatar: string;
-};
+import EmailToggle from "@/components/EmailToggle/EmailToggle";
+import type { User } from "@/types/user";
 
 type UsersListProps = {
   users: User[];
 };
 
 export default function UsersList({ users }: UsersListProps) {
-  const dispatch = useDispatch<AppDispatch>();
-
-  const reduxUsers = useSelector(
-    (state: RootState) => state.users.users
-  );
-
-  useEffect(() => {
-    dispatch(setUsers(users));
-  }, [dispatch, users]);
-
-  const displayedUsers =
-    reduxUsers.length > 0 ? reduxUsers : users;
-
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(3, 1fr)",
-        gap: "20px",
-        marginTop: "20px",
-      }}
-    >
-      {displayedUsers.map((user) => (
+    <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {users.map((user) => (
         <Link
           key={user.id}
           href={`/users/${user.id}`}
-          style={{
-            textDecoration: "none",
-            color: "inherit",
-          }}
+          className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
         >
-          <div
-            style={{
-              border: "1px solid #ddd",
-              borderRadius: "8px",
-              padding: "20px",
-            }}
-          >
-            <Image
-              src={user.avatar}
-              alt={`${user.first_name} ${user.last_name}`}
-              width={100}
-              height={100}
-            />
+          <Image
+            src={user.avatar}
+            alt={`${user.first_name} ${user.last_name}`}
+            width={100}
+            height={100}
+            className="rounded-full object-cover"
+          />
 
-            <h2>
-              {user.first_name} {user.last_name}
-            </h2>
+          <h2 className="mt-4 text-lg font-semibold text-gray-900">
+            {user.first_name} {user.last_name}
+          </h2>
 
-            <p>{user.email}</p>
-          </div>
+          <EmailToggle email={user.email} />
+
+          <span className="mt-4 inline-block text-sm font-medium text-blue-600">
+            View details →
+          </span>
         </Link>
       ))}
     </div>
